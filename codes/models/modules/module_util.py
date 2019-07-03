@@ -39,8 +39,8 @@ class ResidualBlock_noBN(nn.Module):
 
     def __init__(self, nf=64):
         super(ResidualBlock_noBN, self).__init__()
-        self.conv1 = nn.Conv2d(nf, nf, 3, 1, 1, bias=True)
-        self.conv2 = nn.Conv2d(nf, nf, 3, 1, 1, bias=True)
+        self.conv1 = nn.Conv1d(nf, nf, 3, 1, 1, bias=True)
+        self.conv2 = nn.Conv1d(nf, nf, 3, 1, 1, bias=True)
 
         # initialization
         initialize_weights([self.conv1, self.conv2], 0.1)
