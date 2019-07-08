@@ -10,12 +10,12 @@ class MSRResNet(nn.Module):
     def __init__(self, in_nc=3, out_nc=3, nf=64, nb=16):
         super(MSRResNet, self).__init__()
 
-        self.conv_first = nn.Conv1d(in_nc, nf, 2, 1, 1, bias=True)
+        self.conv_first = nn.Conv1d(in_nc, nf, 3, 1, 1, bias=True)
         basic_block = functools.partial(mutil.ResidualBlock_noBN, nf=nf)
         self.recon_trunk = mutil.make_layer(basic_block, nb)
 
-        self.HRconv = nn.Conv1d(nf, nf, 2, 1, 1, bias=True)
-        self.conv_last = nn.Conv1d(nf, out_nc, 2, 1, 1, bias=True)
+        self.HRconv = nn.Conv1d(nf, nf, 3, 1, 1, bias=True)
+        self.conv_last = nn.Conv1d(nf, out_nc, 3, 1, 1, bias=True)
 
         # activation function
         self.lrelu = nn.LeakyReLU(negative_slope=0.1, inplace=True)

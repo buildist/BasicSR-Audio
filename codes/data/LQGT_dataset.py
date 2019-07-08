@@ -45,8 +45,8 @@ class LQGTDataset(data.Dataset):
 
             LQ_size = GT_size
 
-            # randomly crop
-            start = random.randint(0, audio_GT.size - GT_size)
+            # randomly trim
+            start = random.randint(0, audio_GT.shape[0] - GT_size)
             stop = start + GT_size
             audio_GT = audio_GT[start:stop]
             audio_LQ = audio_LQ[start:stop]
@@ -61,3 +61,4 @@ class LQGTDataset(data.Dataset):
 
     def __len__(self):
         return len(self.paths_GT)
+        

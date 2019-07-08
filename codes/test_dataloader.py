@@ -7,7 +7,7 @@ import soundfile as sf
 if __name__ == '__main__':
     opt = {}
 
-    opt['name'] = 'DIV2K800'
+    opt['name'] = 'test'
     opt['dataroot_GT'] = 'C:/Users/Jacob/Desktop/SuperResolution/BasicSR-Audio/data/test/GT'
     opt['dataroot_LQ'] = 'C:/Users/Jacob/Desktop/SuperResolution/BasicSR-Audio/data/test/LQ'
     opt['mode'] = 'LQGT'

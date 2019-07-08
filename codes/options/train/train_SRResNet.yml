@@ -13,21 +13,21 @@ datasets:
   train:
     name: DIV2K
     mode: LQGT
-    dataroot_GT: C:/Users/Jacob/Desktop/SuperResolution/BasicSR-Audio/data/test/GT
-    dataroot_LQ: C:/Users/Jacob/Desktop/SuperResolution/BasicSR-Audio/data/test/LQ
+    dataroot_GT: /usr/local/google/home/jacobmorgan/Desktop/SR/BasicSR-Audio/data/train/GT
+    dataroot_LQ: /usr/local/google/home/jacobmorgan/Desktop/SR/BasicSR-Audio/data/train/LQ
 
     use_shuffle: true
     n_workers: 8
-    batch_size: 16
-    GT_size: 131072
+    batch_size: 1
+    GT_size: 64
     use_flip: true
     use_rot: true
     color: RGB
   val:
     name: val_set5
     mode: LQGT
-    dataroot_GT: C:/Users/Jacob/Desktop/SuperResolution/BasicSR-Audio/data/test/GT
-    dataroot_LQ: C:/Users/Jacob/Desktop/SuperResolution/BasicSR-Audio/data/test/LQ
+    dataroot_GT: /usr/local/google/home/jacobmorgan/Desktop/SR/BasicSR-Audio/data/val/GT
+    dataroot_LQ: /usr/local/google/home/jacobmorgan/Desktop/SR/BasicSR-Audio/data/val/LQ
 
 #### network structures
 network_G:
@@ -60,9 +60,9 @@ train:
   pixel_weight: 1.0
 
   manual_seed: 10
-  val_freq: !!float 5e3
+  val_freq: !!float 10
 
 #### logger
 logger:
-  print_freq: 100
-  save_checkpoint_freq: !!float 5e3
+  print_freq: 10
+  save_checkpoint_freq: !!float 10

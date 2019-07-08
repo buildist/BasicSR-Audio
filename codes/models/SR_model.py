@@ -89,6 +89,7 @@ class SRModel(BaseModel):
     def optimize_parameters(self, step):
         self.optimizer_G.zero_grad()
         self.fake_H = self.netG(self.var_L)
+        print(self.var_L.shape, self.real_H.shape, self.fake_H.shape)
         l_pix = self.l_pix_w * self.cri_pix(self.fake_H, self.real_H)
         l_pix.backward()
         self.optimizer_G.step()
@@ -100,42 +101,6 @@ class SRModel(BaseModel):
         self.netG.eval()
         with torch.no_grad():
             self.fake_H = self.netG(self.var_L)
-        self.netG.train()
-
-    def test_x8(self):
-        # from https://github.com/thstkdgus35/EDSR-PyTorch
-        self.netG.eval()
-
-        def _transform(v, op):
-            # if self.precision != 'single': v = v.float()
-            v2np = v.data.cpu().numpy()
-            if op == 'v':
-                tfnp = v2np[:, :, :, ::-1].copy()
-            elif op == 'h':
-                tfnp = v2np[:, :, ::-1, :].copy()
-            elif op == 't':
-                tfnp = v2np.transpose((0, 1, 3, 2)).copy()
-
-            ret = torch.Tensor(tfnp).to(self.device)
-            # if self.precision == 'half': ret = ret.half()
-
-            return ret
-
-        lr_list = [self.var_L]
-        for tf in 'v', 'h', 't':
-            lr_list.extend([_transform(t, tf) for t in lr_list])
-        with torch.no_grad():
-            sr_list = [self.netG(aug) for aug in lr_list]
-        for i in range(len(sr_list)):
-            if i > 3:
-                sr_list[i] = _transform(sr_list[i], 't')
-            if i % 4 > 1:
-                sr_list[i] = _transform(sr_list[i], 'h')
-            if (i % 4) % 2 == 1:
-                sr_list[i] = _transform(sr_list[i], 'v')
-
-        output_cat = torch.cat(sr_list, dim=0)
-        self.fake_H = output_cat.mean(dim=0, keepdim=True)
         self.netG.train()
 
     def get_current_log(self):
