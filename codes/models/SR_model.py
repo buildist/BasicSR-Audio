@@ -89,7 +89,6 @@ class SRModel(BaseModel):
     def optimize_parameters(self, step):
         self.optimizer_G.zero_grad()
         self.fake_H = self.netG(self.var_L)
-        print(self.var_L.shape, self.real_H.shape, self.fake_H.shape)
         l_pix = self.l_pix_w * self.cri_pix(self.fake_H, self.real_H)
         l_pix.backward()
         self.optimizer_G.step()
@@ -106,12 +105,12 @@ class SRModel(BaseModel):
     def get_current_log(self):
         return self.log_dict
 
-    def get_current_visuals(self, need_GT=True):
+    def get_current_audio_samples(self, need_GT=True):
         out_dict = OrderedDict()
-        out_dict['LQ'] = self.var_L.detach()[0].float().cpu()
-        out_dict['SR'] = self.fake_H.detach()[0].float().cpu()
+        out_dict['LQ'] = self.var_L.detach()[0].cpu()
+        out_dict['SR'] = self.fake_H.detach()[0].cpu()
         if need_GT:
-            out_dict['GT'] = self.real_H.detach()[0].float().cpu()
+            out_dict['GT'] = self.real_H.detach()[0].cpu()
         return out_dict
 
     def print_network(self):

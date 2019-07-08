@@ -11,6 +11,7 @@ import cv2
 import torch
 from torchvision.utils import make_grid
 from shutil import get_terminal_size
+import soundfile as sf
 
 import yaml
 try:
@@ -122,8 +123,9 @@ def tensor2img(tensor, out_type=np.uint8, min_max=(0, 1)):
     return img_np.astype(out_type)
 
 
-def save_img(img, img_path, mode='RGB'):
-    cv2.imwrite(img_path, img)
+def save_audio(audio, audio_path):
+    audio = np.transpose(audio.numpy()) * 2. - 1.
+    sf.write(audio_path, audio, 44100, format='WAV', subtype="PCM_24")
 
 
 ####################
@@ -131,14 +133,12 @@ def save_img(img, img_path, mode='RGB'):
 ####################
 
 
-def calculate_psnr(img1, img2):
-    # img1 and img2 have range [0, 255]
-    img1 = img1.astype(np.float64)
-    img2 = img2.astype(np.float64)
-    mse = np.mean((img1 - img2)**2)
+def calculate_psnr(audio1, audio2):
+    # audio1 and audio2 have range [0.0, 1.0]
+    mse = np.mean((audio1 - audio2)**2)
     if mse == 0:
         return float('inf')
-    return 20 * math.log10(255.0 / math.sqrt(mse))
+    return 20 * math.log10(1.0 / math.sqrt(mse))
 
 
 def ssim(img1, img2):
