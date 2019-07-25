@@ -12,13 +12,13 @@ class LRDataset(data.Dataset):
         self.opt = opt
         self.paths_LQ = None
  
-        self.LR_env, self.paths_LR = util.get_audio_paths(opt['dataroot_LQ'])
+        self.paths_LQ, _ = util.get_audio_paths(opt['dataroot_LQ'])
         assert self.paths_LQ, 'Error: LQ paths are empty.'
 
     def __getitem__(self, index):
         LQ_path = self.paths_LQ[index]
         audio_LQ = util.read_audio(LQ_path)
-        audio_LQ = torch.from_numpy(np.ascontiguousarray(audio_LQ)).float()
+        audio_LQ = torch.from_numpy(np.transpose(audio_LQ)).float()
 
         return {'LQ': audio_LQ, 'LQ_path': LQ_path}
 

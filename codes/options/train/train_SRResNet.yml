@@ -2,7 +2,7 @@
 # With 16 Residual blocks w/o BN
 
 #### general settings
-name: audio
+name: audio2
 use_tb_logger: false
 model: sr
 distortion: sr
@@ -13,27 +13,27 @@ datasets:
   train:
     name: DIV2K
     mode: LQGT
-    dataroot_GT: /usr/local/google/home/jacobmorgan/Desktop/SR/BasicSR-Audio/data/train/GT
-    dataroot_LQ: /usr/local/google/home/jacobmorgan/Desktop/SR/BasicSR-Audio/data/train/LQ
+    dataroot_GT: C:/Users/Jacob/Desktop/SuperResolution/BasicSR-Audio/data/F/train
+    dataroot_LQ: C:/Users/Jacob/Desktop/SuperResolution/BasicSR-Audio/data/F_mono_add_sub/train
 
     use_shuffle: true
     n_workers: 8
-    batch_size: 1
-    GT_size: 131072
+    batch_size: 8
+    GT_size: 128
     use_flip: true
     use_rot: true
     color: RGB
   val:
     name: val_set5
     mode: LQGT
-    dataroot_GT: /usr/local/google/home/jacobmorgan/Desktop/SR/BasicSR-Audio/data/val/GT
-    dataroot_LQ: /usr/local/google/home/jacobmorgan/Desktop/SR/BasicSR-Audio/data/val/LQ
+    dataroot_GT: C:/Users/Jacob/Desktop/SuperResolution/BasicSR-Audio/data/F/val
+    dataroot_LQ: C:/Users/Jacob/Desktop/SuperResolution/BasicSR-Audio/data/F_mono_add_sub/val
 
 #### network structures
 network_G:
   which_model_G: MSRResNet
-  in_nc: 2
-  out_nc: 2
+  in_nc: 4
+  out_nc: 4
   nf: 64
   nb: 16
 
@@ -41,7 +41,7 @@ network_G:
 path:
   pretrain_model_G: ~
   strict_load: true
-  resume_state: ~
+  resume_state: C:/Users/Jacob/Desktop/SuperResolution/BasicSR-Audio/experiments/audio2/training_state/2200.state
 
 #### training settings: learning rate scheme, loss
 train:
@@ -60,9 +60,9 @@ train:
   pixel_weight: 1.0
 
   manual_seed: 10
-  val_freq: !!float 10
+  val_freq: !!float 5e3
 
 #### logger
 logger:
-  print_freq: 10
-  save_checkpoint_freq: !!float 10
+  print_freq: 200
+  save_checkpoint_freq: !!float 5e3

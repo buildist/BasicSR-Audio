@@ -7,14 +7,14 @@ if __name__ == '__main__':
     opt = {}
 
     opt['name'] = 'test'
-    opt['dataroot_GT'] = '/usr/local/google/home/jacobmorgan/Desktop/SR/BasicSR-Audio/data/train/GT'
-    opt['dataroot_LQ'] = '/usr/local/google/home/jacobmorgan/Desktop/SR/BasicSR-Audio/data/train/LQ'
+    opt['dataroot_GT'] = 'C:/Users/Jacob/Desktop/SuperResolution/BasicSR-Audio/data/F/val'
+    opt['dataroot_LQ'] = 'C:/Users/Jacob/Desktop/SuperResolution/BasicSR-Audio/data/F_mono/val'
     opt['mode'] = 'LQGT'
     opt['phase'] = 'train'  # 'train' | 'val'
     opt['use_shuffle'] = True
     opt['n_workers'] = 8
-    opt['batch_size'] = 1
-    opt['GT_size'] = 131072
+    opt['batch_size'] = 16
+    opt['GT_size'] = 128
     opt['use_reverse'] = False
     opt['gpu_ids'] = [0]
     opt["dist"] = False

@@ -28,7 +28,7 @@ def create_dataloader(dataset, dataset_opt, opt=None, sampler=None):
 def create_dataset(dataset_opt):
     mode = dataset_opt['mode']
     if mode == 'LQ':
-        from data.LQ_dataset import LQDataset as D
+        from data.LR_dataset import LRDataset as D
     elif mode == 'LQGT':
         from data.LQGT_dataset import LQGTDataset as D
     # elif mode == 'LQGTseg_bg':

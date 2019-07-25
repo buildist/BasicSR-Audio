@@ -12,7 +12,7 @@ import soundfile as sf
 ####################
 
 ###################### get audio path list ######################
-AUDIO_EXTENSIONS = ['.wav']
+AUDIO_EXTENSIONS = ['.npy']
 
 
 def is_audio_file(filename):
@@ -41,11 +41,7 @@ def get_audio_paths(dataroot):
 
 ###################### read audio ######################
 def read_audio(path):
-    '''read audio by scipy
-    return: Numpy float32, [0,1]'''
-    audio, rate = sf.read(path, dtype="float32", always_2d=True)
-    audio = (audio + 1)/2.
-    return audio
+    return np.load(path)
 
 
 ####################

@@ -197,7 +197,8 @@ def main():
                     util.save_audio(sr_audio, save_path)
 
                     # calculate PSNR
-                    avg_psnr += util.calculate_psnr(sr_audio.numpy(), gt_audio.numpy())
+                    # print(audio_name, sr_audio.shape, gt_audio.shape)
+                    # avg_psnr += util.calculate_psnr(sr_audio.numpy(), gt_audio.numpy())
 
                 avg_psnr = avg_psnr / idx
 

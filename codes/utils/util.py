@@ -12,7 +12,7 @@ import torch
 from torchvision.utils import make_grid
 from shutil import get_terminal_size
 import soundfile as sf
-
+from scipy import signal
 import yaml
 try:
     from yaml import CLoader as Loader, CDumper as Dumper
@@ -123,9 +123,14 @@ def tensor2img(tensor, out_type=np.uint8, min_max=(0, 1)):
     return img_np.astype(out_type)
 
 
-def save_audio(audio, audio_path):
-    audio = np.transpose(audio.numpy()) * 2. - 1.
-    sf.write(audio_path, audio, 44100, format='WAV', subtype="PCM_24")
+def save_audio(freq, audio_path):
+    freq = freq.numpy().transpose()
+    freq_left = freq[:,:,0] + 1j * freq[:,:,1]
+    freq_right = freq[:,:,2] + 1j * freq[:,:,3]
+    _, rec_left = signal.istft(freq_left, 10e3)
+    _, rec_right = signal.istft(freq_right, 10e3)
+    audio_rec = np.vstack((rec_left, rec_right)).T
+    sf.write(audio_path, audio_rec, 44100, format='WAV', subtype="PCM_16")
 
 
 ####################

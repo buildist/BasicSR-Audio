@@ -46,16 +46,15 @@ class LQGTDataset(data.Dataset):
             LQ_size = GT_size
 
             # randomly trim
-            start = random.randint(0, audio_GT.shape[0] - GT_size)
+            start = random.randint(0, audio_GT.shape[1] - GT_size)
             stop = start + GT_size
-            audio_GT = audio_GT[start:stop]
-            audio_LQ = audio_LQ[start:stop]
+            audio_GT = audio_GT[:,start:stop,:]
+            audio_LQ = audio_LQ[:,start:stop,:]
 
             # augmentation - reverse
             audio_LQ, audio_GT = util.augment([audio_LQ, audio_GT], self.opt['use_reverse'])
-        audio_GT = np.ascontiguousarray(np.transpose(audio_GT))
-        audio_GT = torch.from_numpy(audio_GT).float()
-        audio_LQ = torch.from_numpy(np.ascontiguousarray(np.transpose(audio_LQ))).float()
+        audio_GT = torch.from_numpy(np.transpose(audio_GT)).float()
+        audio_LQ = torch.from_numpy(np.transpose(audio_LQ)).float()
 
         return {'LQ': audio_LQ, 'GT': audio_GT, 'LQ_path': LQ_path, 'GT_path': GT_path}
 

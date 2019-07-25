@@ -31,3 +31,4 @@ data_samples/samples_byteimg
 data_samples/samples_colorimg
 data_samples/samples_segprob
 data_samples/samples_result
+/data

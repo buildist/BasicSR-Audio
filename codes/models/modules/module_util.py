@@ -9,7 +9,7 @@ def initialize_weights(net_l, scale=1):
         net_l = [net_l]
     for net in net_l:
         for m in net.modules():
-            if isinstance(m, nn.Conv1d):
+            if isinstance(m, nn.Conv2d):
                 init.kaiming_normal_(m.weight, a=0, mode='fan_in')
                 m.weight.data *= scale  # for residual block
                 if m.bias is not None:
@@ -39,8 +39,8 @@ class ResidualBlock_noBN(nn.Module):
 
     def __init__(self, nf=64):
         super(ResidualBlock_noBN, self).__init__()
-        self.conv1 = nn.Conv1d(nf, nf, 3, 1, 1, bias=True)
-        self.conv2 = nn.Conv1d(nf, nf, 3, 1, 1, bias=True)
+        self.conv1 = nn.Conv2d(nf, nf, 3, 1, 1, bias=True)
+        self.conv2 = nn.Conv2d(nf, nf, 3, 1, 1, bias=True)
 
         # initialization
         initialize_weights([self.conv1, self.conv2], 0.1)
